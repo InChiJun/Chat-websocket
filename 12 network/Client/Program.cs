@@ -65,7 +65,7 @@ namespace AClient
                 int n = server.Receive(data);
 
                 string str = Encoding.Unicode.GetString(data);
-                str = str.Replace("\0", "");
+                str = str.Replace("\0", ""); // 널 문자 제거
                 Console.WriteLine("수신:" + str);
 
 
@@ -88,7 +88,7 @@ namespace AClient
             //
             string message = "ID:" + nameID + ":";
             dataID = Encoding.Unicode.GetBytes(message);
-            clientSocket.Send(dataID); // 이건 어디로 보내는 것이고, 어디에 정의되어 있는지?
+            clientSocket.Send(dataID); // 내장함수로, 서버에 dataID를 전송함
             //
 
             Console.WriteLine("특정 사용자에게 보낼 때는 사용자ID:메시지 로 입력하시고\n" +
@@ -96,7 +96,7 @@ namespace AClient
             do
             {
                 byte[] data;
-                string msg = Console.ReadLine()!;
+                string msg = Console.ReadLine()!; // 클라이언트가 id를 입력하면 메시지를 입력할 때까지 대기(동기로 기다리고, 비동기로 실행)
                 string[] tokens = msg.Split(':');
                 string m;
                 if (tokens[0].Equals("BR"))
@@ -134,7 +134,7 @@ namespace AClient
             byte[] bDts = Encoding.Unicode.GetBytes
                 ("File:" + filename + ":" + fileLength + ":");
             clientSocket.Send(bDts);
-
+            
             byte[] bDtsRx = new byte[4096];
             FileStream fs = new FileStream(filename, 
                 FileMode.Open, FileAccess.Read, 
