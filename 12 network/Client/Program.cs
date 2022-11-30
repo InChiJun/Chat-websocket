@@ -10,6 +10,8 @@ namespace AClient
     {
         private readonly static int BufferSize = 4096;
 
+        static int temperature = 0;
+
         public static void Main()
         {
             try
