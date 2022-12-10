@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GK9z0q0tvEBuPzclkDp0xLVVFZU1VxLqj92IO2zoWkSDmiHZtqw88Ysj8p7Td9zsdeCwi+puGr+hnFzJfqpVQw==",
+  "dgSpecHash": "vFdY3SsR28teRwscXL95C4BhKEBwZDJjd5XFtEcAgghETFIIct41HO0iSwuKbVoPqV/aB4H1oYOxrzL9YDphEg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\CS3-20\\Desktop\\22-2\\네트워크프로그래밍\\Code\\12 network\\Client\\Client.csproj",
+  "projectFilePath": "C:\\Users\\정민영\\Desktop\\학교\\22-2학기\\네트워크프로그래밍\\network-project\\12 network\\Client\\Client.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
