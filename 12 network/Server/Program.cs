@@ -21,7 +21,7 @@ namespace AServer
         }
 
 
-        private Dictionary<string, Socket> connectedClients = new();
+        private Dictionary<string, Socket> connectedClients = new(); // 소켓 값이 들어감
 
         public Dictionary<string, Socket> ConnectedClients
         {
@@ -29,14 +29,14 @@ namespace AServer
             set => connectedClients = value;
         }
 
-        private Socket ServerSocket;
+        private Socket ServerSocket; // 서버 소켓
 
         private readonly IPEndPoint EndPoint = new(IPAddress.Parse("127.0.0.1"), 5001);
 
         int clientNum;
         Server()
         {
-            ServerSocket = new(
+            ServerSocket = new( // TCP 소켓 생성
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
                 ProtocolType.Tcp
@@ -61,9 +61,10 @@ namespace AServer
             {
                 Socket client = ServerSocket.Accept();
 
-
                 Console.WriteLine($"Client accepted: {client.RemoteEndPoint}.");
 
+                // 비동기 Receive 추가: client가 데이터전송 대기
+                // 비동기로 백그라운드 보내서 실행하고 다음으로 넘어감
                 SocketAsyncEventArgs args = new SocketAsyncEventArgs();
                 args.Completed += new EventHandler<SocketAsyncEventArgs>(Received);
                 client.ReceiveAsync(args);
@@ -86,19 +87,20 @@ namespace AServer
             client.Close();
         }
 
-        void Received(object? sender, SocketAsyncEventArgs e)
+        void Received(object? sender, SocketAsyncEventArgs e) //sender는 client 정보
         {
             Socket client = (Socket)sender!;
             byte[] data = new byte[BufferSize];
             try
             {
-                int n = client.Receive(data);
+                int n = client.Receive(data); // 데이터 받기
                 if (n > 0)
                 {
 
                     //
                     MessageProc(client, data);
 
+                    // 메시지 명령 처리 해주고 다시 반복을 해주기 위해 비동기 메시지 대기
                     SocketAsyncEventArgs argsR = new SocketAsyncEventArgs();
                     argsR.Completed += new EventHandler<SocketAsyncEventArgs>(Received);
                     client.ReceiveAsync(argsR);

@@ -54,7 +54,7 @@ namespace AClient
             args.Completed += new EventHandler<SocketAsyncEventArgs>(Received);
             ClientSocket.ReceiveAsync(args);
 
-            Send();
+            Send(); // 메시지가 입력되면 실행
         }
 
 
@@ -86,7 +86,7 @@ namespace AClient
         {
             byte[] dataID;
             Console.WriteLine("ID를 입력하세요");
-            string nameID = Console.ReadLine()!;
+            string nameID = Console.ReadLine()!; // 동기로 대기
             //
             string message = "ID:" + nameID + ":";
             dataID = Encoding.Unicode.GetBytes(message);
