@@ -68,9 +68,13 @@ namespace AMachine
 
                 string str = Encoding.Unicode.GetString(data);
                 str = str.Replace("\0", ""); // 널 문자 제거
-                Console.WriteLine(str);
                 Console.WriteLine("수신:" + str);
-
+                string[] tokens = str.Split(':');
+                
+                if (tokens[1].Equals("02"))
+                {
+                    messageProtocol(server, str);
+                }
 
                 SocketAsyncEventArgs args = new SocketAsyncEventArgs();
                 args.Completed += new EventHandler<SocketAsyncEventArgs>(Received);
@@ -94,7 +98,7 @@ namespace AMachine
             machineSocket.Send(dataID); // 내장함수로, 서버에 dataID를 전송함
             //
 
-            Console.WriteLine("기기의 변화를 입력할 때는 사용자ID:변화내용으로 입력하세요.");
+            Console.WriteLine("기기의 변화를 입력할 때는 사용자ID:02or03:변화내용으로 입력하세요.");
             do
             {
                 byte[] data;
@@ -110,10 +114,6 @@ namespace AMachine
                     Console.WriteLine("[전체전송]{0}", tokens[1]);
                     try { MachineSocket.Send(data); } catch { }
                 }
-                else if (tokens[0].Equals("File"))
-                {
-                    SendFile(tokens[1]);
-                }
                 else //  (tokens[0].Equals("TO"))
                 {
                     //
@@ -128,29 +128,57 @@ namespace AMachine
 
             } while (true);
         }
-        void SendFile(string filename)
+
+        void messageProtocol(Socket s, string msg)
         {
-            FileInfo fi = new FileInfo(filename);
-            string fileLength = fi.Length.ToString();
+            string[] tokens = msg.Split(':');
+            string code = tokens[1];
 
-            byte[] bDts = Encoding.Unicode.GetBytes
-                ("File:" + filename + ":" + fileLength + ":");
-            machineSocket.Send(bDts);
-
-            byte[] bDtsRx = new byte[4096];
-            FileStream fs = new FileStream(filename,
-                FileMode.Open, FileAccess.Read,
-                FileShare.None);
-            long received = 0;
-            while (received < fi.Length)
+            if (code.Equals("01"))
             {
-                received += fs.Read(bDtsRx, 0, 4096);
-                machineSocket.Send(bDtsRx);
-                Array.Clear(bDtsRx);
-            }
-            fs.Close();
 
-            Console.WriteLine("파일 송신 종료");
+                try { MachineSocket.Send(BitConverter.GetBytes(temperature)); } catch { }
+                /***
+                clientNum++;
+                fromID = tokens[1].Trim();
+                Console.WriteLine("[접속{0}]ID:{1},{2}",
+                    clientNum, fromID, s.RemoteEndPoint);
+                //
+                connectedClients.Add(fromID, s);
+                s.Send(Encoding.Unicode.GetBytes("ID_REG_Success:"));
+                Broadcast(s, m);
+            }
+            else if (code.Equals("02"))
+            {
+                fromID = tokens[1].Trim();
+                string msg = tokens[2];
+                Console.WriteLine("[전체]{0}:{1}", fromID, msg);
+                //
+                Broadcast(s, m);
+                s.Send(Encoding.Unicode.GetBytes("BR_Success:"));
+            }
+            else if (code.Equals("03"))
+            {
+                fromID = tokens[1].Trim();
+                toID = tokens[2].Trim();
+                string msg = tokens[3];
+                string rMsg = "[From:" + fromID + "][TO:" + toID + "]" + msg;
+                Console.WriteLine(rMsg);
+
+                //
+                SendTo(toID, m);
+                s.Send(Encoding.Unicode.GetBytes("To_Success:"));
+            }
+            else if (code.Equals("File"))
+            {
+                ReceiveFile(s, m);
+            }
+            else
+            {
+                Broadcast(s, m);
+            }
+                ***/
+            }
         }
 
     }
