@@ -1,0 +1,15 @@
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\bin\Debug\net6.0\Machine.exe
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\bin\Debug\net6.0\Machine.deps.json
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\bin\Debug\net6.0\Machine.runtimeconfig.json
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\bin\Debug\net6.0\Machine.dll
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\bin\Debug\net6.0\Machine.pdb
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.csproj.AssemblyReference.cache
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.AssemblyInfoInputs.cache
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.AssemblyInfo.cs
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.csproj.CoreCompileInputs.cache
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.dll
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\refint\Machine.dll
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.pdb
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\Machine.genruntimeconfig.cache
+C:\Users\정민영\Desktop\학교\22-2학기\네트워크프로그래밍\network-project\12 network\Machine\obj\Debug\net6.0\ref\Machine.dll

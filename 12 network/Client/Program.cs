@@ -10,8 +10,6 @@ namespace AClient
     {
         private readonly static int BufferSize = 4096;
 
-        static int temperature = 0;
-
         public static void Main()
         {
             try
@@ -123,23 +121,23 @@ namespace AClient
                     try { ClientSocket.Send(data); } catch { }
                 }
 
-                
+
 
 
             } while (true);
         }
         void SendFile(string filename)
         {
-            FileInfo fi = new FileInfo(filename);   
+            FileInfo fi = new FileInfo(filename);
             string fileLength = fi.Length.ToString();
 
             byte[] bDts = Encoding.Unicode.GetBytes
                 ("File:" + filename + ":" + fileLength + ":");
             clientSocket.Send(bDts);
-            
+
             byte[] bDtsRx = new byte[4096];
-            FileStream fs = new FileStream(filename, 
-                FileMode.Open, FileAccess.Read, 
+            FileStream fs = new FileStream(filename,
+                FileMode.Open, FileAccess.Read,
                 FileShare.None);
             long received = 0;
             while (received < fi.Length)

@@ -2,6 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\12 network",
+    "\\12 network\\Client",
+    "\\12 network\\Machine",
     "\\12 network\\Server"
   ],
   "SelectedNode": "\\12 network\\Server\\Program.cs",

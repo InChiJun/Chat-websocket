@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-Machine",
+      "appliesTo": "12 network/Machine/Machine.cs",
+      "type": "launch"
+    }
+  ]
+}
