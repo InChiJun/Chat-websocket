@@ -96,11 +96,8 @@ namespace AServer
                 int n = client.Receive(data); // 데이터 받기
                 if (n > 0)
                 {
-
-                    //
                     MessageProc(client, data);
 
-                    // 메시지 명령 처리 해주고 다시 반복을 해주기 위해 비동기 메시지 대기
                     SocketAsyncEventArgs argsR = new SocketAsyncEventArgs();
                     argsR.Completed += new EventHandler<SocketAsyncEventArgs>(Received);
                     client.ReceiveAsync(argsR);
@@ -119,10 +116,9 @@ namespace AServer
             //
             string[] tokens = m.Split(':');
             string fromID;
-            string toID;
-            string code = tokens[0];
+            string toID = tokens[0];
 
-            if (code.Equals("ID"))
+            if (toID.Equals("ID")) // ID
             {
                 clientNum++;
                 fromID = tokens[1].Trim();
@@ -131,30 +127,13 @@ namespace AServer
                 //
                 connectedClients.Add(fromID, s);
                 s.Send(Encoding.Unicode.GetBytes("ID_REG_Success:"));
-                Broadcast(s, m);
             }
-            else if (tokens[0].Equals("BR"))
+            else if (toID.Equals("01") || toID.Equals("02")) // TO
             {
-                fromID = tokens[1].Trim();
-                string msg = tokens[2];
-                Console.WriteLine("[전체]{0}:{1}", fromID, msg);
-                //
-                Broadcast(s, m);
-                s.Send(Encoding.Unicode.GetBytes("BR_Success:"));
-            }
-            else if (code.Equals("TO"))
-            {
-                fromID = tokens[1].Trim();
-                toID = tokens[2].Trim();
-                string msg = tokens[3];
-                string rMsg = "[From:" + fromID + "][TO:" + toID + "]" + msg;
-                Console.WriteLine(rMsg);
-
-                //
+                Console.WriteLine("[to " + toID + " sended");
                 SendTo(toID, m);
-                s.Send(Encoding.Unicode.GetBytes("To_Success:"));
             }
-            else if (code.Equals("File"))
+            else if (toID.Equals("File"))
             {
                 ReceiveFile(s, m);
             }
@@ -188,7 +167,6 @@ namespace AServer
                 flen+=r;
             }
             fs.Close();
-
         }
         void SendTo(string id, string msg)
         {

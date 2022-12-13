@@ -66,7 +66,7 @@ namespace AClient
 
                 string str = Encoding.Unicode.GetString(data);
                 str = str.Replace("\0", ""); // 널 문자 제거
-                Console.WriteLine("수신:" + str);
+                Console.WriteLine(str);
 
 
                 SocketAsyncEventArgs args = new SocketAsyncEventArgs();
@@ -85,71 +85,23 @@ namespace AClient
             byte[] dataID;
             Console.WriteLine("ID를 입력하세요");
             string nameID = Console.ReadLine()!; // 동기로 대기
-            //
+            
             string message = "ID:" + nameID + ":";
             dataID = Encoding.Unicode.GetBytes(message);
             clientSocket.Send(dataID); // 내장함수로, 서버에 dataID를 전송함
-            //
+            Console.WriteLine("MessageFormat = ToID:Commad:Value");
 
-            Console.WriteLine("특정 사용자에게 보낼 때는 사용자ID:메시지 로 입력하시고\n" +
-                "브로드캐스트하려면 BR:메시지 를 입력하세요");
             do
-            {
+            {                
                 byte[] data;
                 string msg = Console.ReadLine()!; // 클라이언트가 id를 입력하면 메시지를 입력할 때까지 대기(동기로 기다리고, 비동기로 실행)
                 string[] tokens = msg.Split(':');
                 string m;
-                if (tokens[0].Equals("BR"))
-                {
-                    //
-                    m = "BR:" + nameID + ":" + tokens[1] + ":";
+                string toID = tokens[0];
 
-                    data = Encoding.Unicode.GetBytes(m);
-                    Console.WriteLine("[전체전송]{0}", tokens[1]);
-                    try { ClientSocket.Send(data); } catch { }
-                }
-                else if (tokens[0].Equals("File"))
-                {
-                    SendFile(tokens[1]);
-                }
-                else //  (tokens[0].Equals("TO"))
-                {
-                    //
-                    m = "TO:" + nameID + ":" + tokens[0] + ":" + tokens[1] + ":";
-                    data = Encoding.Unicode.GetBytes(m);
-                    Console.WriteLine("[{0}에게 전송]:{1}", tokens[0], tokens[1]);
-                    try { ClientSocket.Send(data); } catch { }
-                }
-
-
-
-
+                data = Encoding.Unicode.GetBytes(msg);
+                try { ClientSocket.Send(data); } catch { }                
             } while (true);
         }
-        void SendFile(string filename)
-        {
-            FileInfo fi = new FileInfo(filename);
-            string fileLength = fi.Length.ToString();
-
-            byte[] bDts = Encoding.Unicode.GetBytes
-                ("File:" + filename + ":" + fileLength + ":");
-            clientSocket.Send(bDts);
-
-            byte[] bDtsRx = new byte[4096];
-            FileStream fs = new FileStream(filename,
-                FileMode.Open, FileAccess.Read,
-                FileShare.None);
-            long received = 0;
-            while (received < fi.Length)
-            {
-                received += fs.Read(bDtsRx, 0, 4096);
-                clientSocket.Send(bDtsRx);
-                Array.Clear(bDtsRx);
-            }
-            fs.Close();
-
-            Console.WriteLine("파일 송신 종료");
-        }
-
     }
 }
